@@ -212,12 +212,8 @@ void serverPortSetter(struct threadData* data){
     
     moveNext(data->serverStructs);
     count++;
-
-    //printf("%s%ld\n", "Here's the portnum: ", parms->portNumber);
     
     while( count < len ){
-
-        printf("%s\n", "Shit");
         
         parms = (struct serverData*)(get(data->serverStructs));
 
@@ -249,31 +245,24 @@ void serverPortSetter(struct threadData* data){
 
         moveNext(data->serverStructs);
         count++;
-        printf("%s%ld\n", "Here's the portnum: ", parms->portNumber);
     }
-    printf("%s%d\n", "Here's data->globalServerPort from bottom of serverPortSetter: ", data->globalServerPort);
 }
 
 void lbWorker(int client_sockd, struct threadData* data) {
-    printf("%s\n", "hello from lbWorker");
     int connfd,acceptfd;
     uint16_t connectport;
     int count = 1;
     struct serverData *parms;
     acceptfd = client_sockd;
 
-    printf("%s\n", "Hello from just above first mutex lock in lbWorker");
     pthread_mutex_lock(&hcMutex);
     connectport = data->globalServerPort;
     pthread_mutex_unlock(&hcMutex);
-    printf("%s\n", "Hello from just below first mutex lock inlbWorker");
     
     // Remember to validate return values
     // You can fail tests for not validating
     
     if( (data->numberOfServers == 1) && (connfd = client_connect(connectport)) < 0){
-
-        printf("%s\n", "HEllo from first if statement in lbWorker");
 
         dprintf(acceptfd, "%s", "HTTP/1.1 500 Internal Server Error\r\nContent-Length: 0\r\n\r\n");
         close(acceptfd);
@@ -282,7 +271,6 @@ void lbWorker(int client_sockd, struct threadData* data) {
     }
     
     while( ((connfd = client_connect(connectport)) < 0) && (count < (data->numberOfServers - 1)) ){
-        printf("%s\n", "Hello from while loop in lbWorker");
         pthread_mutex_lock(&hcMutex);
         moveFront(data->serverStructs);
         parms = (struct serverData*)(get(data->serverStructs));
@@ -303,8 +291,6 @@ void lbWorker(int client_sockd, struct threadData* data) {
         count++;
 
     }
-
-    printf("%s%d\n","Here's the globalServerPort num from lbWorker: ", data->globalServerPort);
     
     if(connfd < 0){
 
@@ -319,7 +305,6 @@ void lbWorker(int client_sockd, struct threadData* data) {
     }
     // This is a sample on how to bridge connections.
     // Modify as needed.
-    printf("%s\n", "Hello from bridge_loop call");
     bridge_loop(acceptfd, connfd);
     if(acceptfd >= 0){
         close(acceptfd);
@@ -330,7 +315,7 @@ void lbWorker(int client_sockd, struct threadData* data) {
 }
 
 void * hcHelper(void *arg){
-    printf("%s\n", "Hello from hcHelper");
+
 
     int writeReturn         = 0;
     int readReturn          = 0;
@@ -351,7 +336,6 @@ void * hcHelper(void *arg){
     int fd;
     char buffer[HC_RECV_BUFF_SIZE];
     memset(&buffer, 0, sizeof(buffer));
-    printf("%s\n", "HOOBLAH");
 
     struct serverData *parms;
     parms = (struct serverData*)arg;
@@ -366,7 +350,6 @@ void * hcHelper(void *arg){
 
     fd_set set;
     struct timeval timeout;
-    printf("%s\n", "BOOBLAH");
     timeout.tv_sec = 1;
     timeout.tv_usec = 0;
     FD_ZERO (&set);
@@ -428,7 +411,6 @@ void * hcHelper(void *arg){
 
     //If we've made it this far, we have the healthcheck response in a buffer, and we can parse it.
     if((sscanfReturn = sscanf(buffer, "%s %[0-9] %s\r\n%s %[0-9]\r\n\r\n%[0-9]\n%[0-9]", httpVersion, statusCode, ok, conLenHeader, contentLength, failTotal, total)) != 7){
-        printf("%s\n", "Hello from inside sscanf block");
         close(fd);
         parms->flag = 1;
         return NULL;
@@ -472,15 +454,11 @@ void * hcHelper(void *arg){
     }    
     parms->flag            = 0;
     close(fd);
-    //printf("%s%ld%s%ld\n", "The totalRequestsServiced for port number ", parms->portNumber, " is ", parms->totalRequestsServiced);
-    //printf("%s%ld%s%f\n", "The successRate for portNumber ", parms->portNumber, " is ", parms->successRate);
-
     return NULL;
 }
 
 void * healthCheck(void *arg){
 
-    printf("%s\n", "HELLO FROM HEALTHCHECK!!");
     struct threadData *parms;
     parms = (struct threadData*)arg;
     int len = length(parms->serverStructs);
@@ -489,8 +467,6 @@ void * healthCheck(void *arg){
     pthread_t hcThreadPool[len];
 
     while(1){
-
-        printf("%s\n", "Hello from healthCheck while loop");
 
         struct timespec ts;
         struct timeval now;
@@ -533,7 +509,6 @@ void * healthCheck(void *arg){
 
         serverPortSetter(parms);
 
-        printf("%s\n", "Hello from below serverPortSetter call healthCheckHelper");
         pthread_mutex_unlock(&hcMutex);
         pthread_cond_signal(&hcVar2);
 
