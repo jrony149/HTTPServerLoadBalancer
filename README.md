@@ -29,6 +29,16 @@ This load balancer accepts two optional integer command line arguments that have
     
     - The "run.sh" file will handle everything for you.  It will "cd" to the MTS sub-folder and build a docker image of the multi-threaded http server.  It will then run an           instance of the multi-threaded http server for every port number that you entered as an argument to "run.sh", each within its own docker container running ubuntu 18.04.         You may throw requests at these port numbers directly, or you may use the load balancer, which again, can be contacted at port 8080 by default.  Upon issuing a "ctrl-C"         (SIGINT) to the "run.sh" script, the script will kill the load balancer process, run 'make clean' to clean the local directory, "cd" to the MTS sub-directory, and call the       "stop_remove.sh" script to stop and remove all of the docker containers running instances of the multi-threaded http server.  Nice and tidy.
  
- - EXAMPLES OF HOW TO RUN:
+ - EXAMPLE OF HOW TO RUN:
+     
+   Assuming you have already cloned the repo;  
+   Run:  
+   $./run.sh 8082 8083 8084  
+   At this point you should see print messages from the load balancer.."[+] Load balancer is waiting" should be the first message displayed.  
+   Remember, above we have told "run.sh" to open three instances of the multi-threaded http server because we have given it three port numbers.  
+     
+   When you're ready to stop using the load balancer and servers, simply throw a SIGINT (ctrl-C) at your "run.sh" script, and voila, you're done using the load balancer and servers.  Everything will be cleaned.  
+   
+   Happy load balancing!!  
 
 
