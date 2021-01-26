@@ -18,8 +18,7 @@ This load balancer accepts two optional integer command line arguments that have
   
 - The -R flag indicates the threshold for sending a "health check" request to each of the servers.  This result "health check" request is the total number  of requests that the server has received over the total number of "missed" requests (a miss is any request the resulted in a response code in the 400's or 500's ).  It is the total number of requests that is used to determine the "least loaded" server, and so the -R argument really just translates to "the number of requests that the load balancer must see before re-assessing which server is the 'least loaded'".  
   
-- The -N flag indicates the number of threads that the load balancer will use as "workers".  The more threads the load balancer has to work with, the more requests  
-the load balancer can concurrently handle (until increasing the thread count starts to meet a point of diminishing returns due to limitations of the hardware, of course).  
+- The -N flag indicates the number of threads that the load balancer will use as "workers". The more threads the load balancer has to work with, the more requests the load balancer can concurrently handle (until increasing the thread count starts to meet a point of diminishing returns due to limitations of the hardware, of course).  
   
 - HOW TO RUN:  
 
