@@ -23,5 +23,8 @@ This load balancer accepts two optional integer command line arguments that have
 - HOW TO RUN:  
   
   - Clone the repository.  
+  - Run the command "run.sh <server_port_number_1> <server_port_number_2> <server_port_number_3> ... "   
+  
+    - Note that you can add as many server port numbers as you wish as command line arguments to "run.sh".  These server port numbers will be the ports of the servers that are         spun up for the load balancer to interface with.  The default port number for the load balancer itself is hard-coded in the "run.sh" file as port 8080, but you can change       it if you so desire.  Simply open the "run.sh" file and switch out the the "8080" port number for any other port number you wish.  The -R and -N values are also hard coded       as 4 and 4, respectively, but again, you may change those values if you wish by simply opening the "run.sh" file and altering them.
 
 
