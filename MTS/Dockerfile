@@ -2,5 +2,6 @@
 
 FROM ubuntu:18.04
 COPY . /
-RUN dep.sh
-RUN make.sh
+RUN /dep.sh
+
+
