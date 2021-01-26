@@ -35,9 +35,17 @@ This load balancer accepts two optional integer command line arguments that have
    Run:  
    $./run.sh 8082 8083 8084  
    At this point you should see print messages from the load balancer.."[+] Load balancer is waiting" should be the first message displayed.  
-   Remember, above we have told "run.sh" to open three instances of the multi-threaded http server because we have given it three port numbers.  
+   Remember, above we have told "run.sh" to open three instances of the multi-threaded http server because we have given it three port numbers. 
      
-   When you're ready to stop using the load balancer and servers, simply throw a SIGINT (ctrl-C) at your "run.sh" script, and voila, you're done using the load balancer and servers.  Everything will be cleaned.  
+   You can throw a request at the load balancer like so;  
+     
+   curl -v localhost:8080/<file_name>  
+     
+   Or you can throw a request at any one of the servers like so;  
+     
+   curl -v localhost:8082/<file_name>  
+     
+   When you're ready to stop using the load balancer and servers, simply throw a SIGINT (ctrl-C) at your "run.sh" script, and voila, you're done using the load balancer and        servers.  Wait a few moments and everything will be cleaned.  
    
    Happy load balancing!!  
 
