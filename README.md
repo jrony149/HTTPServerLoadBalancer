@@ -37,7 +37,7 @@ This load balancer accepts two optional integer command line arguments that have
      
    When you're ready to stop using the load balancer and servers, simply throw a SIGINT (ctrl-C) at your "run.sh" script, and voila, you're done using the load balancer and        servers.  Wait a few moments and everything will be cleaned.
    
-   - FINAL NOTE:  The restrictions on file names are coincident with those defined in the HTTPMultiThreadedServer repository on this Github account, i.e., file names cannot be    over 27 characters long, and the only characters that may be included are <A-Z, a-z, 0-9, - and _>.
+- FINAL NOTE:  The restrictions on file names are coincident with those defined in the HTTPMultiThreadedServer repository on this Github account, i.e., file names cannot be       over 27 characters long, and the only characters that may be included are <A-Z, a-z, 0-9, - and _>.
    
    Happy load balancing!!  
 
