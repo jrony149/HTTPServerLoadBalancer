@@ -39,7 +39,7 @@ This load balancer accepts two optional integer command line arguments that have
    
 - FINAL NOTE:  The restrictions on file names are coincident with those defined in the HTTPMultiThreadedServer repository on this Github account, i.e., file names cannot be       over 27 characters long, and the only characters that may be included are <A-Z, a-z, 0-9, - and _>.
    
-   Happy load balancing!!  
+Happy load balancing!!  
 
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
